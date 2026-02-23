@@ -10,7 +10,8 @@ public class Main {
 
         for (int i = 1; i <= 5; i++) {
         }
-        System.out.println("THis is for midterm");
-        System.out.println("Hellow world");
+        System.out.println("This is for midterm");
+        System.out.println("Hello world");
+        System.out.println("Book Searching");
     }
 }
