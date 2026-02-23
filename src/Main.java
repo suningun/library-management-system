@@ -6,6 +6,7 @@ public class Main {
 
         for (int i = 1; i <= 5; i++) {
             System.out.println("THis is for midterm");
+            i++;
         }
 
     }
