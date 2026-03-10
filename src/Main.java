@@ -11,6 +11,10 @@ public class Main {
     static ArrayList<String> borrowedBooks = new ArrayList<>();
     static ArrayList<String> borrowers = new ArrayList<>();
     static ArrayList<LocalDate> borrowDates = new ArrayList<>();
+    static void waitForEnter() {
+        System.out.println("\nPress Enter to return to dashboard...");
+        scanner.nextLine();
+    }
 
     static String borrowedUserName = "";
     static String borrowedBookTitle = "";
@@ -149,7 +153,9 @@ public class Main {
         System.out.println("3. Delete Book");
         System.out.println("4. Search Book");
         System.out.println("5. View All Books");
+        System.out.println("6. Return to Dashboard");
         System.out.print("Enter choice: ");
+
         int action = scanner.nextInt();
         scanner.nextLine();
 
@@ -248,8 +254,10 @@ public class Main {
                         System.out.println((i + 1) + ". " + book + " - Available");
                     }
                 }
+                bookManagement();
+            case 6:
+                return;
 
-                break;
         }
     }
 
@@ -262,8 +270,10 @@ public class Main {
         System.out.println("3. Delete Member");
         System.out.println("4. Search Member");
         System.out.println("5. View All Members");
+        System.out.println("6. Return to Dashboard");
         System.out.print("Enter choice: ");
         int action = scanner.nextInt();
+
         scanner.nextLine();
 
         switch (action) {
@@ -351,8 +361,12 @@ public class Main {
                         System.out.println((i + 1) + ". " + member + " - No borrowed book");
                     }
                 }
+                memberManagement();
+            case 6:
+                return;
 
-                break;
+            default:
+                System.out.println("Invalid option.");
         }
     }
 
@@ -407,6 +421,7 @@ public class Main {
         System.out.println("Borrower: " + user);
         System.out.println("Due date: " + savedDueDate);
     }
+
     // RETURN BOOK
     static void returnBook() {
 
