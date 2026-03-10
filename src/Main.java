@@ -11,9 +11,12 @@ public class Main {
     static ArrayList<String> borrowedBooks = new ArrayList<>();
     static ArrayList<String> borrowers = new ArrayList<>();
     static ArrayList<LocalDate> borrowDates = new ArrayList<>();
-    static void waitForEnter() {
-        System.out.println("\nPress Enter to return to dashboard...");
-        scanner.nextLine();
+    static void pause() {
+        try {
+            Thread.sleep(2000); // 2 seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     static String borrowedUserName = "";
@@ -196,6 +199,7 @@ public class Main {
                 bookList.set(updateChoice - 1, newTitle);
 
                 System.out.println("Book updated.");
+                pause();
                 break;
 
             case 3:
@@ -257,8 +261,9 @@ public class Main {
                 bookManagement();
             case 6:
                 return;
-
         }
+        pause();
+        bookManagement();
     }
 
     // MEMBER MANAGEMENT
@@ -361,13 +366,14 @@ public class Main {
                         System.out.println((i + 1) + ". " + member + " - No borrowed book");
                     }
                 }
-                memberManagement();
             case 6:
                 return;
 
             default:
                 System.out.println("Invalid option.");
         }
+        pause();
+        memberManagement();
     }
 
     // BORROW BOOK
@@ -420,6 +426,7 @@ public class Main {
         System.out.println("Book: " + book);
         System.out.println("Borrower: " + user);
         System.out.println("Due date: " + savedDueDate);
+        pause();
     }
 
     // RETURN BOOK
@@ -455,6 +462,7 @@ public class Main {
             borrowedBookTitle = "";
             savedDueDate = null;
         }
+        pause();
     }
 
     // OVERDUE CHECK
@@ -488,6 +496,7 @@ public class Main {
 
         if (borrowedBooks.isEmpty()) {
             System.out.println("No borrow records.");
+            pause();
             return;
         }
 
