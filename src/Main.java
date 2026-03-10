@@ -69,13 +69,16 @@ public class Main {
                 case 5:
                     checkOverdue();
                     break;
-
                 case 6:
+                    viewBorrowRecords();
+                    break;
+
+                case 7:
                     System.out.println("Logged out.");
                     login();
                     break;
 
-                case 7:
+                case 8:
                     System.out.println("System closed.");
                     break;
 
