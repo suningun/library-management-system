@@ -16,11 +16,23 @@ public class Main {
 
     public static void main(String[] args) {
 
-        bookList.add("Java Basics");
-        bookList.add("OOP in Java");
+        bookList.add("Harry Potter");
+        bookList.add("To Kill a Mockingbird");
+        bookList.add("The Great Gatsby");
+        bookList.add("1984");
+        bookList.add("The Catcher in the Rye");
+        bookList.add("The Hunter");
+        bookList.add("The Bible");
+        bookList.add("The Lord of the Rings");
+        bookList.add("The Hobbit");
+        bookList.add("The Da Vinci Code");
 
-        memberList.add("John Doe");
-        memberList.add("Jane Smith");
+
+        memberList.add("Un Suning");
+        memberList.add("Sok Ket Outdom");
+        memberList.add("Oeun Sopharoth");
+        memberList.add("Seng Mengkheang");
+        memberList.add("Chhorn Sovanda");
 
         login();
 
@@ -73,8 +85,8 @@ public class Main {
     // LOGIN SYSTEM
     static void login() {
 
-        String correctUsername = "aupp_librarian";
-        String correctPassword = "lib@#@!123";
+        String correctUsername = "h";
+        String correctPassword = "l";
 
         int attempts = 3;
 
@@ -124,15 +136,16 @@ public class Main {
     static void bookManagement() {
 
         System.out.println("\n--- Book Management ---");
-        System.out.println("1 Add Book");
-        System.out.println("2 Update Book");
-        System.out.println("3 Delete Book");
-        System.out.println("4 Search Book");
-
+        System.out.println("1. Add Book");
+        System.out.println("2. Update Book");
+        System.out.println("3. Delete Book");
+        System.out.println("4. Search Book");
+        System.out.print("Enter choice: ");
         int action = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // FIX: consume newline
 
         switch (action) {
+
 
             case 1:
                 System.out.print("Enter book title: ");
@@ -189,10 +202,10 @@ public class Main {
     static void memberManagement() {
 
         System.out.println("\n--- Member Management ---");
-        System.out.println("1 Add Member");
-        System.out.println("2 Update Member");
-        System.out.println("3 Delete Member");
-        System.out.println("4 Search Member");
+        System.out.println("1. Add Member");
+        System.out.println("2. Update Member");
+        System.out.println("3. Delete Member");
+        System.out.println("4. Search Member");
 
         int action = scanner.nextInt();
         scanner.nextLine();
@@ -257,35 +270,47 @@ public class Main {
         System.out.print("Enter user name: ");
         String user = scanner.nextLine();
 
-        System.out.print("Enter book title: ");
-        String book = scanner.nextLine();
-
-        if (memberList.contains(user) && bookList.contains(book)) {
-
-            borrowedUserName = user;
-            borrowedBookTitle = book;
-            hasBorrowed = true;
-
-            LocalDate borrowDate = LocalDate.now();
-            savedDueDate = borrowDate.plusDays(14);
-
-            bookList.remove(book);
-
-            System.out.println("Borrow successful.");
-            System.out.println("Due date: " + savedDueDate);
-
-        } else {
-
-            System.out.println("Borrow failed.");
-
-            if (!memberList.contains(user))
-                System.out.println("Member not registered.");
-
-            if (!bookList.contains(book))
-                System.out.println("Book not available.");
+        if (!memberList.contains(user)) {
+            System.out.println("Member not registered.");
+            return;
         }
-    }
 
+        if (bookList.isEmpty()) {
+            System.out.println("No books available.");
+            return;
+        }
+
+        System.out.println("\nAvailable Books:");
+
+
+        for (int i = 0; i < bookList.size(); i++) {
+            System.out.println((i + 1) + ". " + bookList.get(i));
+        }
+
+        System.out.print("Select book number: ");
+        int bookChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (bookChoice < 1 || bookChoice > bookList.size()) {
+            System.out.println("Invalid selection.");
+            return;
+        }
+
+        String book = bookList.get(bookChoice - 1);
+
+        borrowedUserName = user;
+        borrowedBookTitle = book;
+        hasBorrowed = true;
+
+        LocalDate borrowDate = LocalDate.now();
+        savedDueDate = borrowDate.plusDays(14);
+
+        bookList.remove(book);
+
+        System.out.println("\nBorrow successful.");
+        System.out.println("Book: " + book);
+        System.out.println("Due date: " + savedDueDate);
+    }
     // RETURN BOOK
     static void returnBook() {
 
