@@ -1,5 +1,3 @@
-import java.awt.print.Book;
-import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -33,11 +31,11 @@ public class Main {
         bookList.add("The Da Vinci Code");
 
 
-        memberList.add("Un Suning");
-        memberList.add("Sok Ket Outdom");
-        memberList.add("Oeun Sopharoth");
-        memberList.add("Seng Mengkheang");
-        memberList.add("Chhorn Sovanda");
+        memberList.add("un_suning");
+        memberList.add("sok_ketoutdom");
+        memberList.add("oeun_sopharoth");
+        memberList.add("seng_mengkheang");
+        memberList.add("chhorn_sovanda");
 
         login();
 
