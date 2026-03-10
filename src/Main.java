@@ -1,3 +1,5 @@
+import java.awt.print.Book;
+import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,6 +10,9 @@ public class Main {
 
     static ArrayList<String> bookList = new ArrayList<>();
     static ArrayList<String> memberList = new ArrayList<>();
+    static ArrayList<String> borrowedBooks = new ArrayList<>();
+    static ArrayList<String> borrowers = new ArrayList<>();
+    static ArrayList<LocalDate> borrowDates = new ArrayList<>();
 
     static String borrowedUserName = "";
     static String borrowedBookTitle = "";
@@ -67,6 +72,7 @@ public class Main {
 
                 case 6:
                     System.out.println("Logged out.");
+                    login();
                     break;
 
                 case 7:
@@ -126,8 +132,9 @@ public class Main {
         System.out.println("3. Borrow Book");
         System.out.println("4. Return Book");
         System.out.println("5. Overdue List");
-        System.out.println("6. Logout");
-        System.out.println("7. Exit");
+        System.out.println("6. View Borrow Records");
+        System.out.println("7. Log Out");
+        System.out.println("8. Exit");
 
         System.out.print("Enter choice: ");
     }
@@ -140,9 +147,10 @@ public class Main {
         System.out.println("2. Update Book");
         System.out.println("3. Delete Book");
         System.out.println("4. Search Book");
+        System.out.println("5. View All Books");
         System.out.print("Enter choice: ");
         int action = scanner.nextInt();
-        scanner.nextLine(); // FIX: consume newline
+        scanner.nextLine();
 
         switch (action) {
 
@@ -155,35 +163,58 @@ public class Main {
                 break;
 
             case 2:
-                System.out.print("Enter book to update: ");
-                String oldBook = scanner.nextLine();
 
-                if (bookList.contains(oldBook)) {
-
-                    System.out.print("Enter new title: ");
-                    String newTitle = scanner.nextLine();
-
-                    int index = bookList.indexOf(oldBook);
-                    bookList.set(index, newTitle);
-
-                    System.out.println("Book updated.");
-
-                } else {
-                    System.out.println("Book not found.");
+                if (bookList.isEmpty()) {
+                    System.out.println("No books available.");
+                    return;
                 }
 
+                System.out.println("\nCurrent Books:");
+                for (int i = 0; i < bookList.size(); i++) {
+                    System.out.println((i + 1) + ". " + bookList.get(i));
+                }
+
+                System.out.print("Select book number to update: ");
+                int updateChoice = scanner.nextInt();
+                scanner.nextLine();
+
+                if (updateChoice < 1 || updateChoice > bookList.size()) {
+                    System.out.println("Invalid selection.");
+                    return;
+                }
+
+                System.out.print("Enter new title: ");
+                String newTitle = scanner.nextLine();
+
+                bookList.set(updateChoice - 1, newTitle);
+
+                System.out.println("Book updated.");
                 break;
 
             case 3:
-                System.out.print("Enter book to delete: ");
-                String deleteBook = scanner.nextLine();
 
-                if (bookList.remove(deleteBook)) {
-                    System.out.println("Book removed.");
-                } else {
-                    System.out.println("Book not found.");
+                if (bookList.isEmpty()) {
+                    System.out.println("No books available.");
+                    return;
                 }
 
+                System.out.println("\nCurrent Books:");
+                for (int i = 0; i < bookList.size(); i++) {
+                    System.out.println((i + 1) + ". " + bookList.get(i));
+                }
+
+                System.out.print("Select book number to delete: ");
+                int deleteChoice = scanner.nextInt();
+                scanner.nextLine();
+
+                if (deleteChoice < 1 || deleteChoice > bookList.size()) {
+                    System.out.println("Invalid selection.");
+                    return;
+                }
+
+                String removedBook = bookList.remove(deleteChoice - 1);
+
+                System.out.println("Book '" + removedBook + "' removed.");
                 break;
 
             case 4:
@@ -195,6 +226,29 @@ public class Main {
                 } else {
                     System.out.println("Book not found.");
                 }
+            case 5:
+
+                System.out.println("\n===== Book List =====");
+
+                for (int i = 0; i < bookList.size(); i++) {
+
+                    String book = bookList.get(i);
+                    boolean isBorrowed = false;
+
+                    for (int j = 0; j < borrowedBooks.size(); j++) {
+                        if (borrowedBooks.get(j).equals(book)) {
+                            System.out.println((i + 1) + ". " + book + " - Borrowed by " + borrowers.get(j));
+                            isBorrowed = true;
+                            break;
+                        }
+                    }
+
+                    if (!isBorrowed) {
+                        System.out.println((i + 1) + ". " + book + " - Available");
+                    }
+                }
+
+                break;
         }
     }
 
@@ -206,6 +260,7 @@ public class Main {
         System.out.println("2. Update Member");
         System.out.println("3. Delete Member");
         System.out.println("4. Search Member");
+        System.out.println("5. View All Members");
 
         int action = scanner.nextInt();
         scanner.nextLine();
@@ -221,37 +276,49 @@ public class Main {
                 break;
 
             case 2:
-                System.out.print("Enter member to update: ");
-                String oldMember = scanner.nextLine();
 
-                if (memberList.contains(oldMember)) {
-
-                    System.out.print("Enter new name: ");
-                    String updated = scanner.nextLine();
-
-                    int index = memberList.indexOf(oldMember);
-                    memberList.set(index, updated);
-
-                    System.out.println("Member updated.");
-
-                } else {
-                    System.out.println("Member not found.");
+                System.out.println("\nMembers:");
+                for (int i = 0; i < memberList.size(); i++) {
+                    System.out.println((i + 1) + ". " + memberList.get(i));
                 }
 
+                System.out.print("Select member number to update: ");
+                int memberUpdate = scanner.nextInt();
+                scanner.nextLine();
+
+                if (memberUpdate < 1 || memberUpdate > memberList.size()) {
+                    System.out.println("Invalid selection.");
+                    return;
+                }
+
+                System.out.print("Enter new name: ");
+                String newName = scanner.nextLine();
+
+                memberList.set(memberUpdate - 1, newName);
+
+                System.out.println("Member updated.");
                 break;
 
             case 3:
-                System.out.print("Enter member to delete: ");
-                String deleteMember = scanner.nextLine();
 
-                if (memberList.remove(deleteMember)) {
-                    System.out.println("Member deleted.");
-                } else {
-                    System.out.println("Member not found.");
+                System.out.println("\nMembers:");
+                for (int i = 0; i < memberList.size(); i++) {
+                    System.out.println((i + 1) + ". " + memberList.get(i));
                 }
 
-                break;
+                System.out.print("Select member number to delete: ");
+                int memberDelete = scanner.nextInt();
+                scanner.nextLine();
 
+                if (memberDelete < 1 || memberDelete > memberList.size()) {
+                    System.out.println("Invalid selection.");
+                    return;
+                }
+
+                String removedMember = memberList.remove(memberDelete - 1);
+
+                System.out.println("Member '" + removedMember + "' deleted.");
+                break;
             case 4:
                 System.out.print("Search member: ");
                 String searchMember = scanner.nextLine();
@@ -261,6 +328,30 @@ public class Main {
                 } else {
                     System.out.println("Member not found.");
                 }
+            case 5:
+
+                System.out.println("\n===== Member List =====");
+
+                for (int i = 0; i < memberList.size(); i++) {
+
+                    String member = memberList.get(i);
+                    boolean borrowing = false;
+
+                    for (int j = 0; j < borrowers.size(); j++) {
+
+                        if (borrowers.get(j).equals(member)) {
+                            System.out.println((i + 1) + ". " + member + " - Borrowing: " + borrowedBooks.get(j));
+                            borrowing = true;
+                            break;
+                        }
+                    }
+
+                    if (!borrowing) {
+                        System.out.println((i + 1) + ". " + member + " - No borrowed book");
+                    }
+                }
+
+                break;
         }
     }
 
@@ -302,13 +393,17 @@ public class Main {
         borrowedBookTitle = book;
         hasBorrowed = true;
 
-        LocalDate borrowDate = LocalDate.now();
-        savedDueDate = borrowDate.plusDays(14);
+        borrowers.add(user);
+        borrowedBooks.add(book);
+        borrowDates.add(LocalDate.now());
+
+        savedDueDate = LocalDate.now().plusDays(14);
 
         bookList.remove(book);
 
         System.out.println("\nBorrow successful.");
         System.out.println("Book: " + book);
+        System.out.println("Borrower: " + user);
         System.out.println("Due date: " + savedDueDate);
     }
     // RETURN BOOK
@@ -369,6 +464,24 @@ public class Main {
         } else {
 
             System.out.println("No overdue loans.");
+        }
+    }
+    static void viewBorrowRecords() {
+
+        System.out.println("\n===== Borrow Records =====");
+
+        if (borrowedBooks.isEmpty()) {
+            System.out.println("No borrow records.");
+            return;
+        }
+
+        for (int i = 0; i < borrowedBooks.size(); i++) {
+
+            System.out.println(
+                    (i + 1) + ". Book: " + borrowedBooks.get(i) +
+                            " | Member: " + borrowers.get(i) +
+                            " | Borrow Date: " + borrowDates.get(i)
+            );
         }
     }
 }
