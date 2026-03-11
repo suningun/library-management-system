@@ -268,6 +268,9 @@ public class Main {
                 break;
             case 6:
                 return;
+
+            default:
+                System.out.println("Invalid choice.");
         }
         pause();
         bookManagement();
