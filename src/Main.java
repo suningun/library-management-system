@@ -95,7 +95,7 @@ public class Main {
                     System.out.println("Invalid choice.");
             }
 
-        } while (choice != 7);
+        } while (choice != 8);
 
         scanner.close();
     }
@@ -294,7 +294,7 @@ public class Main {
         switch (action) {
 
             case 1:
-                System.out.print("Enter member name: ");
+                System.out.print("Enter member's name: ");
                 String newMember = scanner.nextLine();
 
                 memberList.add(newMember);
@@ -390,11 +390,11 @@ public class Main {
     // BORROW BOOK
     static void borrowBook() {
 
-        System.out.print("Enter user name: ");
+        System.out.print("Enter member's name: ");
         String user = scanner.nextLine();
 
         if (!memberList.contains(user)) {
-            System.out.println("Member not registered.");
+            System.out.println("Member is not registered.");
             return;
         }
 
@@ -433,7 +433,7 @@ public class Main {
 
         bookList.remove(book);
 
-        System.out.println("\nBorrow successful.");
+        System.out.println("\nBook Borrowed successfully.");
         System.out.println("Book: " + book);
         System.out.println("Borrower: " + user);
         System.out.println("Due date: " + savedDueDate);
@@ -443,7 +443,7 @@ public class Main {
     // RETURN BOOK
     static void returnBook() {
 
-        System.out.print("Enter member name: ");
+        System.out.print("Enter member's name: ");
         String name = scanner.nextLine();
 
         boolean found = false;
@@ -466,7 +466,7 @@ public class Main {
 
                 } else {
 
-                    System.out.println("Returned successfully.");
+                    System.out.println("Book Returned successfully.");
                 }
 
                 // return book to library
