@@ -11,10 +11,7 @@ public class Main {
     static ArrayList<String> borrowedBooks = new ArrayList<>();
     static ArrayList<String> borrowers = new ArrayList<>();
     static ArrayList<LocalDate> borrowDates = new ArrayList<>();
-    static void waitForEnter() {
-        System.out.println("\nPress Enter to return to dashboard...");
-        scanner.nextLine();
-    }
+
     static void pause() {
         try {
             Thread.sleep(2000); // 2 seconds
@@ -354,6 +351,7 @@ public class Main {
                 } else {
                     System.out.println("Member not found.");
                 }
+                break;
             case 5:
 
                 System.out.println("\n===== Member List =====");
